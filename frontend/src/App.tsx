@@ -3,8 +3,11 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { LoginPage } from './pages/LoginPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { DevisListPage } from './pages/DevisListPage';
+import { CreateDevisPage } from './pages/CreateDevisPage';
+import { ProduitListPage } from './pages/ProduitListPage';
+import { ClientListPage } from './pages/ClientListPage';
+import { UtilisateurListPage } from './pages/UtilisateurListPage';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import { Loading } from './components/common/Loading';
 import toast, { Toaster } from 'react-hot-toast';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -36,6 +39,38 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <DevisListPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/devis/nouveau"
+        element={
+          <ProtectedRoute>
+            <CreateDevisPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/produits"
+        element={
+          <ProtectedRoute>
+            <ProduitListPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/clients"
+        element={
+          <ProtectedRoute>
+            <ClientListPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/utilisateurs"
+        element={
+          <ProtectedRoute>
+            <UtilisateurListPage />
           </ProtectedRoute>
         }
       />
