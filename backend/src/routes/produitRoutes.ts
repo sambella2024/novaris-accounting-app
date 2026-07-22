@@ -1,22 +1,13 @@
 import { Router } from 'express';
 import { authenticate, authorize } from '../middleware/auth';
+import { ProduitController } from '../controllers/produitController';
 
 const router = Router();
 
-router.get('/', authenticate, (req, res) => {
-  res.json({ message: 'List produits' });
-});
-
-router.post('/', authenticate, authorize(['ADMIN']), (req, res) => {
-  res.json({ message: 'Create produit' });
-});
-
-router.get('/:id', authenticate, (req, res) => {
-  res.json({ message: 'Get produit' });
-});
-
-router.put('/:id', authenticate, authorize(['ADMIN']), (req, res) => {
-  res.json({ message: 'Update produit' });
-});
+router.get('/', authenticate, ProduitController.listProduits);
+router.post('/', authenticate, authorize(['ADMIN']), ProduitController.createProduit);
+router.get('/:id', authenticate, ProduitController.getProduit);
+router.put('/:id', authenticate, authorize(['ADMIN']), ProduitController.updateProduit);
+router.delete('/:id', authenticate, authorize(['ADMIN']), ProduitController.deleteProduit);
 
 export default router;

@@ -1,22 +1,12 @@
 import { Router } from 'express';
 import { authenticate, authorize } from '../middleware/auth';
+import { UtilisateurController } from '../controllers/utilisateurController';
 
 const router = Router();
 
-router.get('/', authenticate, authorize(['ADMIN']), (req, res) => {
-  res.json({ message: 'List utilisateurs' });
-});
-
-router.post('/', authenticate, authorize(['ADMIN']), (req, res) => {
-  res.json({ message: 'Create utilisateur' });
-});
-
-router.get('/:id', authenticate, (req, res) => {
-  res.json({ message: 'Get utilisateur' });
-});
-
-router.put('/:id', authenticate, authorize(['ADMIN']), (req, res) => {
-  res.json({ message: 'Update utilisateur' });
-});
+router.get('/', authenticate, authorize(['ADMIN']), UtilisateurController.listUtilisateurs);
+router.post('/', authenticate, authorize(['ADMIN']), UtilisateurController.createUtilisateur);
+router.get('/:id', authenticate, UtilisateurController.getUtilisateur);
+router.put('/:id', authenticate, authorize(['ADMIN']), UtilisateurController.updateUtilisateur);
 
 export default router;

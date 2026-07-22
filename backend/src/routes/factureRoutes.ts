@@ -1,22 +1,13 @@
 import { Router } from 'express';
 import { authenticate, authorize } from '../middleware/auth';
+import { FactureController } from '../controllers/factureController';
 
 const router = Router();
 
-router.get('/', authenticate, (req, res) => {
-  res.json({ message: 'List Factures' });
-});
-
-router.get('/:id', authenticate, (req, res) => {
-  res.json({ message: 'Get Facture' });
-});
-
-router.post('/:id/validate', authenticate, authorize(['RESPONSABLE_FINANCIER']), (req, res) => {
-  res.json({ message: 'Validate Facture' });
-});
-
-router.get('/:id/historique', authenticate, (req, res) => {
-  res.json({ message: 'Get Facture historique' });
-});
+router.get('/', authenticate, FactureController.listFactures);
+router.get('/:id', authenticate, FactureController.getFacture);
+router.post('/:id/validate', authenticate, authorize(['RESPONSABLE_FINANCIER', 'ADMIN']), FactureController.validateFacture);
+router.put('/:id/status', authenticate, authorize(['RESPONSABLE_FINANCIER', 'ADMIN']), FactureController.updateStatus);
+router.get('/:id/pdf', authenticate, FactureController.exportPDF);
 
 export default router;
